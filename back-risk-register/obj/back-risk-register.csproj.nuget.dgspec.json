@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\luisf\\source\\repos\\back-risk-register\\back-risk-register\\back-risk-register.csproj": {}
+    "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\back-risk-register.csproj": {}
   },
   "projects": {
-    "C:\\Users\\luisf\\source\\repos\\back-risk-register\\back-risk-register\\back-risk-register.csproj": {
+    "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\back-risk-register.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\luisf\\source\\repos\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
+        "projectUniqueName": "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
         "projectName": "back-risk-register",
-        "projectPath": "C:\\Users\\luisf\\source\\repos\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
-        "packagesPath": "C:\\Users\\luisf\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\luisf\\source\\repos\\back-risk-register\\back-risk-register\\obj\\",
+        "projectPath": "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\luisf\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -41,6 +41,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[5.1.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
