@@ -12,7 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Services.AddScoped<DataTaskRegister>();
 //builder.Services.AddScoped<IRisk, RiskService>();
-
+builder.Services.AddScoped<ILogin, ServiceLogin>();
+builder.Services.AddScoped<IUser, ServiceUser>();
 
 var app = builder.Build();
 

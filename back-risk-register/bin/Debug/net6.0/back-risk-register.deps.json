@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "back-risk-register/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.9",
           "Microsoft.Data.SqlClient": "5.1.1",
           "Newtonsoft.Json": "13.0.3",
           "Swashbuckle.AspNetCore": "6.2.3"
@@ -47,6 +48,17 @@
           "lib/netstandard2.0/Azure.Identity.dll": {
             "assemblyVersion": "1.7.0.0",
             "fileVersion": "1.700.22.46903"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.9": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "6.24.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
+            "assemblyVersion": "6.0.9.0",
+            "fileVersion": "6.0.922.41926"
           }
         }
       },
@@ -482,6 +494,13 @@
       "sha512": "sha512-eHEiCO/8+MfNc9nH5dVew/+FvxdaGrkRL4OMNwIz0W79+wtJyEoeRlXJ3SrXhoy9XR58geBYKmzMR83VO7bcAw==",
       "path": "azure.identity/1.7.0",
       "hashPath": "azure.identity.1.7.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-U02ylUPpnb31C8irNFMVZSq6vn00DlCyQHra5ky1mnzWrbwmZ+Er6tms+hsvfp2dVJqTFLXD9+araslWapWY3g==",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/6.0.9",
+      "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.6.0.9.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
       "type": "package",

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\back-risk-register.csproj": {}
+    "C:\\Users\\luisf\\Desktop\\Cuarto año\\planificacion\\Programacion\\risk-register\\back-risk-register\\back-risk-register\\back-risk-register.csproj": {}
   },
   "projects": {
-    "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\back-risk-register.csproj": {
+    "C:\\Users\\luisf\\Desktop\\Cuarto año\\planificacion\\Programacion\\risk-register\\back-risk-register\\back-risk-register\\back-risk-register.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
+        "projectUniqueName": "C:\\Users\\luisf\\Desktop\\Cuarto año\\planificacion\\Programacion\\risk-register\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
         "projectName": "back-risk-register",
-        "projectPath": "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\obj\\",
+        "projectPath": "C:\\Users\\luisf\\Desktop\\Cuarto año\\planificacion\\Programacion\\risk-register\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
+        "packagesPath": "C:\\Users\\luisf\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\luisf\\Desktop\\Cuarto año\\planificacion\\Programacion\\risk-register\\back-risk-register\\back-risk-register\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\luisf\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -41,6 +41,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[5.1.1, )"
