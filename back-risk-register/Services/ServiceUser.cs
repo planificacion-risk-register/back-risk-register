@@ -46,9 +46,43 @@ namespace back_risk_register.Services
             }
         }
 
-        public List<User> getUsers()
+        public IActionResult getUsers()
         {
-            throw new NotImplementedException();
+            List<User> list = new List<User>();
+            try
+            {
+                using (var conexion = new SqlConnection(cadenaSQL))
+                {
+                    conexion.Open();
+                    var cmd = new SqlCommand("GetAllUserLogins", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (var rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+
+                            list.Add(new User()
+                            {
+                                Id = Convert.ToInt32(rd["id"]),
+                                UserName = rd["userName"].ToString(),
+                                FirstName = rd["firstName"].ToString(),
+                                LastName = rd["lastName"].ToString(),
+                                Rol = rd["rol"].ToString(),
+                                Email = rd["email"].ToString(),
+                                Password = rd["password"].ToString()
+                            });
+                        }
+                    }
+                }
+
+                return new JsonResult(list);
+
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message }) { StatusCode = 500 };
+            }
         }
 
         public IActionResult getUsersByEmail(string email)

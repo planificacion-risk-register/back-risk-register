@@ -7,7 +7,7 @@ namespace back_risk_register.Services
     {
         public IActionResult create([FromBody] User user);
         public IActionResult update([FromBody] User user);
-        public List<User> getUsers();
+        public IActionResult getUsers();
         public IActionResult getUsersByEmail(String email);
     }
 }

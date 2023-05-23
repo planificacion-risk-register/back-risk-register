@@ -1,5 +1,6 @@
 ﻿using back_risk_register.Models;
 using back_risk_register.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace back_risk_register.Controllers
@@ -11,6 +12,13 @@ namespace back_risk_register.Controllers
         private readonly IUser _service;
         public UserController(IUser service) {
             _service = service;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Get()
+        {
+            return _service.getUsers();
         }
 
         [HttpPost]
