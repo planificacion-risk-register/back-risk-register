@@ -21,13 +21,18 @@ namespace back_risk_register.Controllers
         public IActionResult listUsersLogin()
         {
             return login.getAll();
-
         }
 
         [HttpPost]
         public IActionResult Login(Login data)
         {
             return login.login(data);
+        }
+
+        [HttpPost("google")]
+        public IActionResult LoginGoogle(Login data)
+        {
+            return login.loginGoogle(data);
         }
     }
 }

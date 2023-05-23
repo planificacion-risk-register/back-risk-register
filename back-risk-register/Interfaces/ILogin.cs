@@ -8,7 +8,7 @@ namespace back_risk_register.Services
         
             public IActionResult login([FromBody] Login login);
 
-            public IActionResult getuser(string username);
+            public IActionResult loginGoogle([FromBody] Login login);
 
             public IActionResult getAll();
        
