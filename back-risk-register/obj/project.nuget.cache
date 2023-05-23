@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "stDvfoHpRBqUkodYq5U0qiHH7bUr03ydoh3t3uKstDgGei6Ip46J7STJsL7i3nSSRlbIXlIZ979pNj2Sx/eTww==",
+  "dgSpecHash": "LedRbeLKgOyUWPsYzA/qiUcCF6K6RcyU4EKj7tL8WvebBQ3LEvIOWTClCTLeajAGHq0JBQhB+Yn5Qmn3rTHNKg==",
   "success": true,
   "projectFilePath": "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
+    "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.9\\microsoft.aspnetcore.authentication.jwtbearer.6.0.9.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.1\\microsoft.data.sqlclient.5.1.1.nupkg.sha512",

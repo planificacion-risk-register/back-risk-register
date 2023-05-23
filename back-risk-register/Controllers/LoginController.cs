@@ -1,4 +1,5 @@
 ﻿using back_risk_register.Models;
+using back_risk_register.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace back_risk_register.Controllers
@@ -7,10 +8,26 @@ namespace back_risk_register.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        [HttpPost]
-        public IActionResult Login(Login login)
+
+        private readonly ILogin login;
+
+        public LoginController(ILogin service)
         {
-            return Ok("User login");
+            login = service;
+        }
+
+        [HttpGet]
+        [Route("list")]
+        public IActionResult listUsersLogin()
+        {
+            return login.getAll();
+
+        }
+
+        [HttpPost]
+        public IActionResult Login(Login data)
+        {
+            return login.login(data);
         }
     }
 }
