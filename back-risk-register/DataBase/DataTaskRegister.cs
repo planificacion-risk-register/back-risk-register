@@ -1,234 +1,141 @@
-﻿using back_risk_register.Models;
-using back_risk_register.StoredProcedures;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Data.Common;
-using System.Data.SqlClient;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.Mvc;
-
+using System.Numerics;
+using back_risk_register.Models;
 namespace back_risk_register.DataBase
 {
     public class DataTaskRegister
     {
-        public DataTaskRegister() { }
 
-        public async Task<int> GetLastRiskRegisterId()
-        {
-            int lastId = 0;
-            var conn = new Connection();
-            try
-            {
-                using (var connection = new SqlConnection(conn.getConnection()))
-                {
-                    await connection.OpenAsync();
-                    using (var command = connection.CreateCommand())
-                    {
-                        command.CommandText = "SELECT TOP 1 id_plan FROM task_register ORDER BY id_plan DESC";
-
-                        var result = await command.ExecuteScalarAsync();
-                        if (result != null && result != DBNull.Value)
-                        {
-                            lastId = Convert.ToInt32(result);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine("Error retrieving last risk register ID: " + ex.Message);
-                return -1;
-            }
-
-            return lastId;
-        }
-
-
-
-        public async Task CreateRisks([FromBody] List<Risk> riskList)
-        {
-            var idPlan = await GetLastRiskRegisterId();
-
-            var conn = new Connection();
-            using (var connection = new SqlConnection(conn.getConnection()))
-            {
-                await connection.OpenAsync();
-
-                try
-                {
-                    foreach (var risk in riskList)
-                    {
-                        using (var command = connection.CreateCommand())
-                        {
-                            command.CommandText = "INSERT INTO risks (id_plan, risk_description, impact_description, impact, probability, owner, response_plan, priority) " +
-                                                  "VALUES (@id_plan, @risk_description, @impact_description, @impact, @probability, @owner, @response_plan, @priority)";
-
-                            command.Parameters.Add("@id_plan", SqlDbType.Int).Value = idPlan;
-                            command.Parameters.Add("@risk_description", SqlDbType.VarChar, 50).Value = risk.risk_description;
-                            command.Parameters.Add("@impact_description", SqlDbType.VarChar, 50).Value = risk.impact_description;
-                            command.Parameters.Add("@impact", SqlDbType.VarChar, 2).Value = risk.impact;
-                            command.Parameters.Add("@probability", SqlDbType.VarChar, 2).Value = risk.probability;
-                            command.Parameters.Add("@owner", SqlDbType.VarChar, 2).Value = risk.owner;
-                            command.Parameters.Add("@response_plan", SqlDbType.VarChar, 50).Value = risk.response_plan;
-                            command.Parameters.Add("@priority", SqlDbType.VarChar, 2).Value = risk.priority;
-
-                            await command.ExecuteNonQueryAsync();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.Error.WriteLine($"Error creating plan with risks: {ex.Message}");
-                }
-            }
-        }
-
-
-        public async Task UpdateRisks(List<Risk> riskList, HttpResponse res)
+        public async Task DeletePlan(int idPlan, HttpResponse res)
         {
             var conn = new Connection();
             using (var connection = new SqlConnection(conn.getConnection()))
             {
                 await connection.OpenAsync();
-                using (var transaction = connection.BeginTransaction())
+                using (var command = connection.CreateCommand())
                 {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "UPDATE task_register SET enabled='true' WHERE id_plan = @id_plan";
+                    command.Parameters.Add("@id_plan", SqlDbType.Int).Value = idPlan;
+
                     try
                     {
-                        foreach (var risk in riskList)
-                        {
-                            if (risk.NewT)
-                            {
-                                using (var command = connection.CreateCommand())
-                                {
-                                    command.Transaction = transaction;
-                                    command.CommandType = CommandType.StoredProcedure;
-                                    command.CommandText = Procedures.sp_add_plan;
+                        await command.ExecuteNonQueryAsync();
+                        res.StatusCode = 200;
+                 
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Error.WriteLine($"Error al eliminar en la base de datos: {ex.Message}");
+                        res.StatusCode = 401;
+                   
+                    }
+                }
+            }
+        }
 
-                                    command.Parameters.Add("@id_plan", SqlDbType.TinyInt).Value = risk.id_plan;
-                                    command.Parameters.Add("@risk_description", SqlDbType.VarChar, 50).Value = risk.risk_description;
-                                    command.Parameters.Add("@impact_description", SqlDbType.VarChar, 50).Value = risk.impact_description;
-                                    command.Parameters.Add("@impact", SqlDbType.VarChar, 2).Value = risk.impact;
-                                    command.Parameters.Add("@probability", SqlDbType.VarChar, 2).Value = risk.probability;
-                                    command.Parameters.Add("@owner", SqlDbType.VarChar, 2).Value = risk.owner;
-                                    command.Parameters.Add("@response_plan", SqlDbType.VarChar, 50).Value = risk.response_plan;
-                                    command.Parameters.Add("@priority", SqlDbType.VarChar, 2).Value = risk.priority;
+        public async Task InsertPlan(TaskRegister plan, HttpResponse res)
+        {
+            var conn = new Connection();
+            using (var connection = new SqlConnection(conn.getConnection()))
+            {
+                await connection.OpenAsync();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "INSERT INTO task_register (id_project, id_task, task_name, last_update, risk_count, total_points, enabled) " +
+                                          "VALUES (@id_project, NEXT VALUE FOR task_sequence, @task_name, @last_update, @risk_count, @total_points, 'false')";
 
-                                    await command.ExecuteNonQueryAsync();
-                                }
-                            }
-                            else
-                            {
-                                using (var command = connection.CreateCommand())
-                                {
-                                    command.Transaction = transaction;
-                                    command.CommandType = CommandType.StoredProcedure;
-                                    command.CommandText = Procedures.sp_update_risk;
+                    command.Parameters.Add("@id_project", SqlDbType.Int).Value = plan.id_project;
+                    command.Parameters.Add("@task_name", SqlDbType.VarChar, 100).Value = plan.task_name;
+                    command.Parameters.Add("@last_update", SqlDbType.Date).Value = plan.last_update;
+                    command.Parameters.Add("@risk_count", SqlDbType.TinyInt).Value = plan.risk_count;
+                    command.Parameters.Add("@total_points", SqlDbType.TinyInt).Value = plan.total_points;
 
-                                    command.Parameters.Add("@id_risk", SqlDbType.Int).Value = risk.id_risk;
-                                    command.Parameters.Add("@risk_description", SqlDbType.VarChar, 50).Value = risk.risk_description;
-                                    command.Parameters.Add("@impact_description", SqlDbType.VarChar, 50).Value = risk.impact_description;
-                                    command.Parameters.Add("@impact", SqlDbType.VarChar, 2).Value = risk.impact;
-                                    command.Parameters.Add("@probability", SqlDbType.VarChar, 2).Value = risk.probability;
-                                    command.Parameters.Add("@owner", SqlDbType.VarChar, 2).Value = risk.owner;
-                                    command.Parameters.Add("@response_plan", SqlDbType.VarChar, 50).Value = risk.response_plan;
-                                    command.Parameters.Add("@priority", SqlDbType.VarChar, 2).Value = risk.priority;
-
-                                    await command.ExecuteNonQueryAsync();
-                                }
-                            }
-                        }
-
-                        transaction.Commit();
+                    try
+                    {
+                        await command.ExecuteNonQueryAsync();
                         res.StatusCode = 200;
                     }
                     catch (Exception ex)
                     {
-                        Console.Error.WriteLine($"Error inserting/updating risks: {ex.Message}");
-                        transaction.Rollback();
-                        res.StatusCode = 500;
+                        Console.Error.WriteLine($"Error al insertar en la base de datos: {ex.Message}");
+                        res.StatusCode = 401;
                     }
                 }
             }
         }
 
-        public async Task DeleteRisks(List<dynamic> idList)
+        public async Task UpdatePlan(TaskRegister plan, HttpResponse res)
         {
             var conn = new Connection();
             using (var connection = new SqlConnection(conn.getConnection()))
             {
                 await connection.OpenAsync();
-                using (var transaction = connection.BeginTransaction())
+                using (var command = connection.CreateCommand())
                 {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "UPDATE task_register SET id_project = @id_project, " +
+                                          "task_name = @task_name, last_update = @last_update, risk_count = @risk_count, " +
+                                          "total_points = @total_points WHERE id_plan = @id_plan";
+
+                    command.Parameters.Add("@id_project", SqlDbType.Int).Value = plan.id_project;
+                    command.Parameters.Add("@task_name", SqlDbType.VarChar, 100).Value = plan.task_name;
+                    command.Parameters.Add("@last_update", SqlDbType.Date).Value = plan.last_update;
+                    command.Parameters.Add("@risk_count", SqlDbType.TinyInt).Value = plan.risk_count;
+                    command.Parameters.Add("@total_points", SqlDbType.TinyInt).Value = plan.total_points;
+                    command.Parameters.Add("@id_plan", SqlDbType.Int).Value = plan.id_plan;
+
                     try
                     {
-                        foreach (var item in idList)
-                        {
-                            int id = item.id_risk;
-
-                            using (var command = connection.CreateCommand())
-                            {
-                                command.Transaction = transaction;
-                                command.CommandType = CommandType.StoredProcedure;
-                                command.CommandText = Procedures.sp_delete_risk;
-
-                                command.Parameters.Add("@id_risk", SqlDbType.TinyInt).Value = item.id_risk;
-
-                                await command.ExecuteNonQueryAsync();
-                            }
-                        }
-
-                        transaction.Commit();
+                        await command.ExecuteNonQueryAsync();
+                        res.StatusCode = 200;
                     }
                     catch (Exception ex)
                     {
-                        Console.Error.WriteLine($"Error deleting risks: {ex.Message}");
-                        transaction.Rollback();
+                        Console.Error.WriteLine($"Error al actualizar en la base de datos: {ex.Message}");
+                        res.StatusCode = 401;
                     }
                 }
             }
         }
-
-        public async Task<List<Risk>> GetRisksByIdPlan(int idPlan)
+        public async Task<List<TaskRegister>> GetAllPlans()
         {
             var conn = new Connection();
-            List<Risk> risks = new List<Risk>();
+            var plans = new List<TaskRegister>();
 
             using (var connection = new SqlConnection(conn.getConnection()))
             {
                 await connection.OpenAsync();
-
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.CommandText = Procedures.sp_get_risks;
-                    command.Parameters.Add("@id_plan", SqlDbType.Int).Value = idPlan;
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT * FROM task_register where enabled='false'";
 
                     using (var reader = await command.ExecuteReaderAsync())
                     {
-                        while (await reader.ReadAsync())
+                        while (reader.Read())
                         {
-                            Risk risk = new Risk
+                            var plan = new TaskRegister
                             {
-                                id_plan = reader.GetInt32(reader.GetOrdinal("id_plan")),
-                                id_risk = reader.GetInt32(reader.GetOrdinal("id_risk")),
-                                risk_description = reader.GetString(reader.GetOrdinal("risk_description")),
-                                impact_description = reader.GetString(reader.GetOrdinal("impact_description")),
-                                impact = reader.GetString(reader.GetOrdinal("impact")),
-                                probability = reader.GetString(reader.GetOrdinal("probability")),
-                                owner = reader.GetString(reader.GetOrdinal("owner")),
-                                response_plan = reader.GetString(reader.GetOrdinal("response_plan")),
-                                priority = reader.GetString(reader.GetOrdinal("priority"))
+                                id_plan = reader.GetInt32(0),
+                                id_project = reader.GetInt32(1),
+                                id_task = reader.GetInt32(2),
+                                task_name = reader.GetString(3),
+                                last_update = reader.GetDateTime(4),
+                                risk_count = reader.GetByte(5),
+                                total_points = reader.GetByte(6)
                             };
 
-                            risks.Add(risk);
+                            plans.Add(plan);
                         }
                     }
                 }
             }
 
-            return risks;
+            return plans;
         }
-
 
     }
 }

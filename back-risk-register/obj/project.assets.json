@@ -2295,19 +2295,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\luisf\\.nuget\\packages\\": {}
+    "C:\\Users\\Usuario\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\luisf\\Desktop\\Cuarto año\\planificacion\\Programacion\\risk-register\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
+      "projectUniqueName": "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
       "projectName": "back-risk-register",
-      "projectPath": "C:\\Users\\luisf\\Desktop\\Cuarto año\\planificacion\\Programacion\\risk-register\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
-      "packagesPath": "C:\\Users\\luisf\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\luisf\\Desktop\\Cuarto año\\planificacion\\Programacion\\risk-register\\back-risk-register\\back-risk-register\\obj\\",
+      "projectPath": "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\back-risk-register.csproj",
+      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+      "outputPath": "D:\\Usuarios\\Desktop\\Universidad\\2023\\Planificación\\back-risk-register\\back-risk-register\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\luisf\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

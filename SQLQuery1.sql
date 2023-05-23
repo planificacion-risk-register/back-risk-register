@@ -10,7 +10,7 @@ CREATE SEQUENCE task_sequence
     START WITH 1
     INCREMENT BY 1;
 
-create table risk_register(
+create table task_register(
 id_plan int primary key identity,
 id_project int,
 id_task int,
@@ -34,7 +34,7 @@ probability varchar (2),
 owner varchar (2),
 response_plan varchar (50),
 priority varchar (2),
-foreign key (id_plan) references risk_register (id_plan)
+foreign key (id_plan) references task_register (id_plan)
 )
 
 select * from risks

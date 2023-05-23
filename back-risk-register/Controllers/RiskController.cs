@@ -40,7 +40,7 @@ namespace back_risk_register.Controllers
     }
 
     [HttpPost("delete")]
-    public async Task<IActionResult> DeleteRisks([FromBody] List<dynamic> idList)
+    public async Task<IActionResult> DeleteRisks([FromBody] List<int> idList)
     {
         await _riskService.DeleteRisks(idList);
         return Ok();
@@ -52,5 +52,11 @@ namespace back_risk_register.Controllers
         List<Risk> risks = await _riskService.GetRisksByIdPlan(idPlan);
         return Ok(risks);
     }
-}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAllRisks(int id)
+        {
+            await _riskService.DeleteAll(id, Response);
+            return Ok();
+        }
+    }
 }
