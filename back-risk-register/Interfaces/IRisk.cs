@@ -10,5 +10,6 @@ namespace back_risk_register.Interfaces
         Task UpdateRisks(List<Risk> riskList, HttpResponse res);
         Task DeleteRisks(List<dynamic> idList);
         Task<List<Risk>> GetRisksByIdPlan(int idPlan);
+        Task DeleteAll(int id_risk);
     }
 }

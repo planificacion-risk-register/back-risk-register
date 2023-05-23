@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace back_risk_register.Services
 {
 
-    public class RiskService : IRisk
+    public class RiskService 
     {
     /*    private readonly DataTaskRegister _dataTaskRegister;
 
@@ -18,7 +18,7 @@ namespace back_risk_register.Services
             _dataTaskRegister = dataTaskRegister;
         }*/
         public RiskService() { }
-        DataTaskRegister _dataTaskRegister = new DataTaskRegister();
+        DataRiskRegister _dataTaskRegister = new DataRiskRegister();
         public Task<int> GetLastRiskRegisterId()
         {
             return _dataTaskRegister.GetLastRiskRegisterId();
@@ -34,7 +34,7 @@ namespace back_risk_register.Services
             return _dataTaskRegister.UpdateRisks(riskList, res);
         }
 
-        public Task DeleteRisks(List<dynamic> idList)
+        public Task DeleteRisks(List<int> idList)
         {
             return _dataTaskRegister.DeleteRisks(idList);
         }
@@ -42,6 +42,11 @@ namespace back_risk_register.Services
         public Task<List<Risk>> GetRisksByIdPlan(int idPlan)
         {
             return _dataTaskRegister.GetRisksByIdPlan(idPlan);
+        }
+
+        public Task DeleteAll(int id_risk, HttpResponse res)
+        {
+            return _dataTaskRegister.DeleteAllRisks(id_risk, res);
         }
     }
 }
