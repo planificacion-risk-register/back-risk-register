@@ -137,5 +137,39 @@ namespace back_risk_register.DataBase
             return plans;
         }
 
+        public async Task<TaskRegister> GetPlan(int idPlan)
+        {
+            var conn = new Connection();
+            var plan = new TaskRegister();
+
+            using (var connection = new SqlConnection(conn.getConnection()))
+            {
+                await connection.OpenAsync();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "SELECT * FROM task_register where id_plan = @id_plan";
+                    command.Parameters.Add("@id_plan", SqlDbType.Int).Value = idPlan;
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        reader.Read();
+
+                        plan.id_plan = reader.GetInt32(0);
+                        plan.id_task = reader.GetInt32(2);
+                        plan.id_project = reader.GetInt32(1);
+                        plan.id_task = reader.GetInt32(2);
+                        plan.task_name = reader.GetString(3);
+                        plan.last_update = reader.GetDateTime(4);
+                        plan.risk_count = reader.GetByte(5);
+                        plan.total_points = reader.GetByte(6);
+             
+                    }
+                }
+            }
+
+            return plan;
+        }
+
     }
 }

@@ -165,3 +165,4 @@ C:\Users\luisf\Desktop\Cuarto año\planificacion\Programacion\risk-register\back
 C:\Users\luisf\Desktop\Cuarto año\planificacion\Programacion\risk-register\back-risk-register\back-risk-register\obj\Debug\net6.0\back-risk-register.genruntimeconfig.cache
 C:\Users\luisf\Desktop\Cuarto año\planificacion\Programacion\risk-register\back-risk-register\back-risk-register\obj\Debug\net6.0\ref\back-risk-register.dll
 C:\Users\luisf\Desktop\Cuarto año\planificacion\Programacion\risk-register\back-risk-register\back-risk-register\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Usuarios\Desktop\Universidad\2023\Planificación\back-risk-register\back-risk-register\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
