@@ -96,20 +96,21 @@ namespace back_risk_register.DataBase
                     {
                         foreach (var risk in riskList)
                         {
-                            if (risk.NewT)
+                            if (risk.newT)
                             {
                                 using (var command = new SqlCommand("add_risk", connection))
                                 {
+                                    command.Transaction = transaction;
                                     command.CommandType = CommandType.StoredProcedure;
 
-                                    command.Parameters.Add("@id_plan", SqlDbType.Int).Value = risk.id_plan;
-                                    command.Parameters.Add("@risk_description", SqlDbType.VarChar, 50).Value = risk.risk_description;
-                                    command.Parameters.Add("@impact_description", SqlDbType.VarChar, 50).Value = risk.impact_description;
-                                    command.Parameters.Add("@impact", SqlDbType.VarChar, 2).Value = risk.impact;
-                                    command.Parameters.Add("@probability", SqlDbType.VarChar, 2).Value = risk.probability;
-                                    command.Parameters.Add("@owner", SqlDbType.VarChar, 2).Value = risk.owner;
-                                    command.Parameters.Add("@response_plan", SqlDbType.VarChar, 50).Value = risk.response_plan;
-                                    command.Parameters.Add("@priority", SqlDbType.VarChar, 2).Value = risk.priority;
+                                    command.Parameters.AddWithValue("@id_plan", risk.id_plan);
+                                    command.Parameters.AddWithValue("@risk_description", risk.risk_description);
+                                    command.Parameters.AddWithValue("@impact_description", risk.impact_description);
+                                    command.Parameters.AddWithValue("@impact", risk.impact);
+                                    command.Parameters.AddWithValue("@probability", risk.probability);
+                                    command.Parameters.AddWithValue("@owner", risk.owner);
+                                    command.Parameters.AddWithValue("@response_plan", risk.response_plan);
+                                    command.Parameters.AddWithValue("@priority", risk.priority);
 
                                     await command.ExecuteNonQueryAsync();
                                 }
@@ -118,17 +119,17 @@ namespace back_risk_register.DataBase
                             {
                                 using (var command = new SqlCommand("update_risk", connection))
                                 {
+                                    command.Transaction = transaction;
                                     command.CommandType = CommandType.StoredProcedure;
 
-
-                                    command.Parameters.Add("@id_risk", SqlDbType.Int).Value = risk.id_risk;
-                                    command.Parameters.Add("@risk_description", SqlDbType.VarChar, 50).Value = risk.risk_description;
-                                    command.Parameters.Add("@impact_description", SqlDbType.VarChar, 50).Value = risk.impact_description;
-                                    command.Parameters.Add("@impact", SqlDbType.VarChar, 2).Value = risk.impact;
-                                    command.Parameters.Add("@probability", SqlDbType.VarChar, 2).Value = risk.probability;
-                                    command.Parameters.Add("@owner", SqlDbType.VarChar, 2).Value = risk.owner;
-                                    command.Parameters.Add("@response_plan", SqlDbType.VarChar, 50).Value = risk.response_plan;
-                                    command.Parameters.Add("@priority", SqlDbType.VarChar, 2).Value = risk.priority;
+                                    command.Parameters.AddWithValue("@id_risk",risk.id_risk);
+                                    command.Parameters.AddWithValue("@risk_description", risk.risk_description);
+                                    command.Parameters.AddWithValue("@impact_description", risk.impact_description);
+                                    command.Parameters.AddWithValue("@impact", risk.impact);
+                                    command.Parameters.AddWithValue("@probability", risk.probability);
+                                    command.Parameters.AddWithValue("@owner", risk.owner);
+                                    command.Parameters.AddWithValue("@response_plan", risk.response_plan);
+                                    command.Parameters.AddWithValue("@priority", risk.priority);
 
                                     await command.ExecuteNonQueryAsync();
                                 }
@@ -138,15 +139,28 @@ namespace back_risk_register.DataBase
                         transaction.Commit();
                         res.StatusCode = 200;
                     }
+                    catch (SqlException ex)
+                    {
+                        Console.Error.WriteLine($"Error de SQL: {ex.Message}");
+                        Console.Error.WriteLine($"Número de error: {ex.Number}");
+                        Console.Error.WriteLine($"Estado de SQL: {ex.State}");
+                        Console.Error.WriteLine($"Procedimiento almacenado: {ex.Procedure}");
+                        Console.Error.WriteLine($"Línea de error: {ex.LineNumber}");
+
+                        transaction.Rollback();
+                        res.StatusCode = 500;
+                    }
                     catch (Exception ex)
                     {
-                        Console.Error.WriteLine($"Error inserting/updating risks: {ex.Message}");
+                        Console.Error.WriteLine($"Error general: {ex.Message}");
+
                         transaction.Rollback();
                         res.StatusCode = 500;
                     }
                 }
             }
         }
+
 
 
         public async Task DeleteRisks(List<int> idList)
@@ -165,6 +179,7 @@ namespace back_risk_register.DataBase
 
                             using (var command = new SqlCommand("delete_risk", connection))
                             {
+                                command.Transaction = transaction;
                                 command.CommandType = CommandType.StoredProcedure;
 
                                 command.Parameters.Add("@id_risk", SqlDbType.Int).Value = id;
