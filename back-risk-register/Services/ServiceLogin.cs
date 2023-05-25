@@ -59,9 +59,46 @@ namespace back_risk_register.Services
             }
         }
 
-        public IActionResult getuser(string username)
+        public IActionResult loginGoogle([FromBody] Login login)
         {
-            throw new NotImplementedException();
+            List<User> list = new List<User>();
+            User log = new User();
+            try
+            {
+                using (var conexion = new SqlConnection(cadenaSQL))
+                {
+                    conexion.Open();
+                    var cmd = new SqlCommand("GetAllUserLogins", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (var rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+
+                            list.Add(new User()
+                            {
+                                Id = Convert.ToInt32(rd["id"]),
+                                UserName = rd["userName"].ToString(),
+                                FirstName = rd["firstName"].ToString(),
+                                LastName = rd["lastName"].ToString(),
+                                Rol = rd["rol"].ToString(),
+                                Email = rd["email"].ToString(),
+                                Password = rd["password"].ToString()
+                            });
+                        }
+                    }
+                }
+
+                log = list.Where(item => item.Email == login.Email).FirstOrDefault();
+                var token = Generate(log);
+                return new JsonResult(new { token = token, data = log });
+
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { error = ex.Message }) { StatusCode = 500 };
+            }
         }
 
         public IActionResult login([FromBody] Login login)

@@ -46,11 +46,11 @@ namespace back_risk_register.Controllers
             return Ok(plans);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] // comentaria para quitar los 
         public async Task<IActionResult> GetPlan(int id)
         {
             var plan = await _taskService.GetPlan(id);
-            return Ok(plan);
+            return Ok(plan); 
         }
     }
 }
