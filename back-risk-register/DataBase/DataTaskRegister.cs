@@ -13,10 +13,10 @@ namespace back_risk_register.DataBase
             using (var connection = new SqlConnection(conn.getConnection()))
             {
                 await connection.OpenAsync();
-                using (var command = connection.CreateCommand())
+
+                using (var command = new SqlCommand("DeletePlan", connection))
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = "UPDATE task_register SET enabled='true' WHERE id_plan = @id_plan";
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.Add("@id_plan", SqlDbType.Int).Value = idPlan;
 
                     try
@@ -41,11 +41,9 @@ namespace back_risk_register.DataBase
             using (var connection = new SqlConnection(conn.getConnection()))
             {
                 await connection.OpenAsync();
-                using (var command = connection.CreateCommand())
+                using (var command = new SqlCommand("addPlan", connection))
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = "INSERT INTO task_register (id_project, id_task, task_name, last_update, risk_count, total_points, enabled) " +
-                                          "VALUES (@id_project, NEXT VALUE FOR task_sequence, @task_name, @last_update, @risk_count, @total_points, 'false')";
+                    command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.Add("@id_project", SqlDbType.Int).Value = plan.id_project;
                     command.Parameters.Add("@task_name", SqlDbType.VarChar, 100).Value = plan.task_name;
@@ -73,12 +71,9 @@ namespace back_risk_register.DataBase
             using (var connection = new SqlConnection(conn.getConnection()))
             {
                 await connection.OpenAsync();
-                using (var command = connection.CreateCommand())
+                using (var command = new SqlCommand("UpdatePlan", connection))
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = "UPDATE task_register SET id_project = @id_project, " +
-                                          "task_name = @task_name, last_update = @last_update, risk_count = @risk_count, " +
-                                          "total_points = @total_points WHERE id_plan = @id_plan";
+                    command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.Add("@id_project", SqlDbType.Int).Value = plan.id_project;
                     command.Parameters.Add("@task_name", SqlDbType.VarChar, 100).Value = plan.task_name;
@@ -108,10 +103,9 @@ namespace back_risk_register.DataBase
             using (var connection = new SqlConnection(conn.getConnection()))
             {
                 await connection.OpenAsync();
-                using (var command = connection.CreateCommand())
+                using (var command = new SqlCommand("getAllPlan", connection))
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT * FROM task_register where enabled='false'";
+                    command.CommandType = CommandType.StoredProcedure;
 
                     using (var reader = await command.ExecuteReaderAsync())
                     {
@@ -145,10 +139,9 @@ namespace back_risk_register.DataBase
             using (var connection = new SqlConnection(conn.getConnection()))
             {
                 await connection.OpenAsync();
-                using (var command = connection.CreateCommand())
+                using (var command = new SqlCommand("getPlan", connection))
                 {
-                    command.CommandType = CommandType.Text;
-                    command.CommandText = "SELECT * FROM task_register where id_plan = @id_plan";
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.Add("@id_plan", SqlDbType.Int).Value = idPlan;
 
                     using (var reader = await command.ExecuteReaderAsync())
