@@ -26,5 +26,12 @@ namespace back_risk_register.Controllers
         {
             return _service.create(data);
         }
+
+        [HttpGet("GetUser")]
+        public IActionResult getUserEmail(string email)
+        {
+            return _service.getUsersByEmail(email);
+        }
+
     }
 }
