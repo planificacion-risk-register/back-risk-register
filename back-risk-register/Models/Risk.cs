@@ -11,6 +11,6 @@
         public string owner { get; set; }
         public string response_plan { get; set; }
         public string priority { get; set; }
-        public bool NewT { get; set; }
+        public bool newT { get; set; }
     }
 }
