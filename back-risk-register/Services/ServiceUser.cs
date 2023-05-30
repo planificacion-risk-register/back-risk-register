@@ -87,7 +87,44 @@ namespace back_risk_register.Services
 
         public IActionResult getUsersByEmail(string email)
         {
-            throw new NotImplementedException();
+            List<User> list = new List<User>();
+            User log = new User();
+            try
+            {
+                using (var conexion = new SqlConnection(cadenaSQL))
+                {
+                    conexion.Open();
+                    var cmd = new SqlCommand("GetUserLoginByEmail", conexion);
+                    cmd.Parameters.AddWithValue("email", email);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+
+                    using (var rd = cmd.ExecuteReader())
+                    {
+                        while (rd.Read())
+                        {
+
+                            list.Add(new User()
+                            {
+                                Id = Convert.ToInt32(rd["id"]),
+                                FirstName = rd["firstName"].ToString(),
+                                LastName = rd["lastName"].ToString(),
+                                Email = rd["email"].ToString(),
+                                Password = rd["password"].ToString(),
+                                Rol = rd["rol"].ToString(),
+                                UserName = rd["userName"].ToString(),
+                            });
+                        }
+                    }
+                }
+
+                log = list.Where(item => item.Email == email).FirstOrDefault();
+                return new JsonResult(list);
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { msg = ex.Message }) { StatusCode = 500 };
+            }
         }
 
         public IActionResult update([FromBody] User user)

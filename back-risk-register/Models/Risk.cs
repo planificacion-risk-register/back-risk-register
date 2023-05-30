@@ -1,5 +1,5 @@
 ﻿namespace back_risk_register.Models
-{
+{ //
     public class Risk
     {
         public int id_plan { get; set; }
