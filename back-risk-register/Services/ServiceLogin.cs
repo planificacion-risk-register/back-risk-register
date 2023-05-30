@@ -138,7 +138,7 @@ namespace back_risk_register.Services
                 {
                     if (!encrypt.VerifyPassword(login.Password, log.Password))
                     {
-                        return new JsonResult(new { error = "Usuario o contraseña incorrectos" }) { StatusCode = 400 };
+                        return new JsonResult(new { error = "Incorrect username or password" }) { StatusCode = 400 };
                     }
 
                     var token = Generate(log);
@@ -146,7 +146,7 @@ namespace back_risk_register.Services
                 }
                 else
                 {
-                    return new JsonResult(new { error = "No existe el usuario"}) { StatusCode = 400 };
+                    return new JsonResult(new { error = "The user does not exist" }) { StatusCode = 400 };
                 }
                 
             }
