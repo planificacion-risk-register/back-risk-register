@@ -163,6 +163,131 @@ namespace back_risk_register.DataBase
 
             return plan;
         }
+        //tablas segundarias
+
+        public async Task<List<SecondaryTable>> GetOwners()
+        {
+            var conn = new Connection();
+            var owners = new List<SecondaryTable>();
+
+            using (var connection = new SqlConnection(conn.getConnection()))
+            {
+                await connection.OpenAsync();
+                using (var command = new SqlCommand("get_owners", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            var owner = new SecondaryTable
+                            {
+                                id = reader.GetInt32(0),
+                                label = reader.GetString(1)
+                            };
+
+                            owners.Add(owner);
+                        }
+                    }
+                }
+            }
+
+            return owners;
+        }
+        public async Task<List<SecondaryTable>> GetProjects()
+        {
+            var conn = new Connection();
+            var projects = new List<SecondaryTable>();
+
+            using (var connection = new SqlConnection(conn.getConnection()))
+            {
+                await connection.OpenAsync();
+                using (var command = new SqlCommand("get_projects", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            var owner = new SecondaryTable
+                            {
+                                id = reader.GetInt32(0),
+                                label = reader.GetString(1)
+                            };
+
+                            projects.Add(owner);
+                        }
+                    }
+                }
+            }
+
+            return projects;
+        }
+
+        public async Task<List<SecondaryTable>> GetProbability()
+        {
+            var conn = new Connection();
+            var probability = new List<SecondaryTable>();
+
+            using (var connection = new SqlConnection(conn.getConnection()))
+            {
+                await connection.OpenAsync();
+                using (var command = new SqlCommand("get_probability", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            var owner = new SecondaryTable
+                            {
+                                id = reader.GetInt32(0),
+                                label = reader.GetString(1)
+                            };
+
+                            probability.Add(owner);
+                        }
+                    }
+                }
+            }
+
+            return probability;
+        }
+
+        public async Task<List<SecondaryTable>> GetImpact()
+        {
+            var conn = new Connection();
+            var impacts = new List<SecondaryTable>();
+
+            using (var connection = new SqlConnection(conn.getConnection()))
+            {
+                await connection.OpenAsync();
+                using (var command = new SqlCommand("get_impact", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (reader.Read())
+                        {
+                            var owner = new SecondaryTable
+                            {
+                                id = reader.GetInt32(0),
+                                label = reader.GetString(1)
+                            };
+
+                            impacts.Add(owner);
+                        }
+                    }
+                }
+            }
+
+            return impacts;
+        }
+
 
     }
 }
