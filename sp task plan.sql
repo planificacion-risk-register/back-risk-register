@@ -6,8 +6,8 @@ CREATE PROCEDURE addPlan
     @totalPoints TINYINT
 AS
 BEGIN
-    INSERT INTO task_register (id_project, id_task, task_name, last_update, risk_count, total_points)
-    VALUES (@idProject, NEXT VALUE FOR task_sequence, @taskName, @lastUpdate, @riskCount, @totalPoints);
+    INSERT INTO task_register (id_project, id_task, task_name, last_update, risk_count, total_points, enabled)
+    VALUES (@idProject, NEXT VALUE FOR task_sequence, @taskName, @lastUpdate, @riskCount, @totalPoints, 'false');
 END
 
 CREATE PROCEDURE UpdatePlan

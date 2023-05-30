@@ -39,5 +39,30 @@ namespace back_risk_register.Services
             return await _dataTask.GetPlan(id_plan);
 
         }
+        public async Task<List<SecondaryTable>> GetOwners()
+        {
+
+            return await _dataTask.GetOwners();
+        }
+
+        public async Task<List<SecondaryTable>> GetProjects()
+        {
+
+            return await _dataTask.GetProjects();
+        }
+
+        public async Task<List<SecondaryTable>> GetProbability()
+        {
+
+            return await _dataTask.GetProbability();
+        }
+
+        public async Task<List<SecondaryTable>> GetImpacts()
+        {
+
+            return await _dataTask.GetImpact();
+        }
+
+
     }
 }

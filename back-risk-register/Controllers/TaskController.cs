@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using back_risk_register.Models;
 using back_risk_register.Services;
+using System.Numerics;
 
 namespace back_risk_register.Controllers
 {
@@ -50,7 +51,35 @@ namespace back_risk_register.Controllers
         public async Task<IActionResult> GetPlan(int id)
         {
             var plan = await _taskService.GetPlan(id);
-            return Ok(plan); 
+            return Ok(plan);
+        }
+
+        [HttpGet("owners")]
+        public async Task<ActionResult<List<SecondaryTable>>> GetOwners()
+        {
+            var owners = await _taskService.GetOwners();
+            return Ok(owners);
+        }
+
+        [HttpGet("projects")]
+        public async Task<ActionResult<List<SecondaryTable>>> GetProjects()
+        {
+            var owners = await _taskService.GetProjects();
+            return Ok(owners);
+        }
+
+        [HttpGet("probability")]
+        public async Task<ActionResult<List<SecondaryTable>>> GetProbability()
+        {
+            var owners = await _taskService.GetProbability();
+            return Ok(owners);
+        }
+
+        [HttpGet("impact")]
+        public async Task<ActionResult<List<SecondaryTable>>> GetImpact()
+        {
+            var owners = await _taskService.GetImpacts();
+            return Ok(owners);
         }
     }
 }
