@@ -21,7 +21,7 @@ namespace back_risk_register.Services
             {
                 if (searchUser(user.Email))
                 {
-                    return new JsonResult(new { msg = "Ya existe un usuario registrado con ese correo" }) { StatusCode = 400 };
+                    return new JsonResult(new { msg = "There is already a registered user with that email" }) { StatusCode = 400 };
                 }
 
                 using (var conexion = new SqlConnection(cadenaSQL))
@@ -39,7 +39,7 @@ namespace back_risk_register.Services
                     cmd.ExecuteNonQuery();
                 }
 
-                return new JsonResult(new { msg = "Usuario guardado con éxito" });
+                return new JsonResult(new { msg = "User saved successfully" });
             } catch (Exception ex)
             {
                 return new JsonResult(new { error = ex.Message }) { StatusCode = 500 };

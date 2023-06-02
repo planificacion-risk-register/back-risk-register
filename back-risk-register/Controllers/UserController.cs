@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace back_risk_register.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
 
@@ -29,6 +30,7 @@ namespace back_risk_register.Controllers
         }
 
         [HttpGet("GetUser")]
+        
         public IActionResult getUserEmail(string email)
         {
             return _service.getUsersByEmail(email);
