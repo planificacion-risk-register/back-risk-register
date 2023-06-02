@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using back_risk_register.Models;
 using back_risk_register.Services;
 using System.Numerics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace back_risk_register.Controllers
 {
@@ -41,6 +42,7 @@ namespace back_risk_register.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllPlans()
         {
             var plans = await _taskService.GetAllPlans();

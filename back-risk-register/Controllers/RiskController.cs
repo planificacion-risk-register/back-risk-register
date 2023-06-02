@@ -1,6 +1,7 @@
 ﻿using Azure;
 using back_risk_register.Models;
 using back_risk_register.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,8 @@ namespace back_risk_register.Controllers
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> CreateRisks([FromBody] List<Risk> riskList)
+    [Authorize]
+        public async Task<IActionResult> CreateRisks([FromBody] List<Risk> riskList)
     {
         await _riskService.CreateRisks(riskList);
         return Ok();
@@ -47,7 +49,8 @@ namespace back_risk_register.Controllers
     }
 
     [HttpGet("byIdPlan/{idPlan}")]
-    public async Task<ActionResult<List<Risk>>> GetRisksByIdPlan(int idPlan)
+    [Authorize]
+        public async Task<ActionResult<List<Risk>>> GetRisksByIdPlan(int idPlan)
     {
         List<Risk> risks = await _riskService.GetRisksByIdPlan(idPlan);
         return Ok(risks);
