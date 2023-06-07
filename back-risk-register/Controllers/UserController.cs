@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace back_risk_register.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
 
