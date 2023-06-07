@@ -25,7 +25,6 @@ namespace back_risk_register.Services
             encrypt = new Encrypt();
             _config = con;
         }
-
         public IActionResult getAll()
         {
             List<Login> list = new List<Login>();
